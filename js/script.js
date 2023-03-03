@@ -4,7 +4,8 @@ const global = {
         term: '',
         type: '',
         page: 1,
-        totalPages: 1
+        totalPages: 1,
+        totalResults: 0
     }, 
     api: {
         apiKey: '3e995e427fd2be80a3d1fd71b5d911e3',
@@ -248,7 +249,13 @@ async function search() {
 
     if(global.search.term !== '' && global.search.term !== null) {
       // @todo - make request and display results 
-      const {results, total_pages, page} = await searchAPIData();
+      // these destructed params come straight from the API
+      const {results, total_pages, page, total_results} = await searchAPIData();
+    
+      global.search.page = page;
+      global.search.totalPages = total_pages;
+      global.search.totalResults = total_results;
+
       if(results.length === 0){
         showAlert('No results found');
         return;
@@ -264,8 +271,12 @@ async function search() {
 }
 
 
-// Display Search Results 
+/////////////////// Display Search Results 
 function displaySearchResults(results){
+    // Clear previous results
+    document.querySelector('#search-results').innerHTML = '';
+    document.querySelector('#search-results-heading').innerHTML = '';
+    document.querySelector('#pagination').innerHTML = '';
 
 
     results.forEach(result => {
@@ -296,11 +307,57 @@ function displaySearchResults(results){
                 </p>
             </div>
         `;
+        // displays the number of results in a search
+        document.querySelector('#search-results-heading').innerHTML = `
+                <h2>${results.length} of ${global.search.totalResults} Results for ${global.search.term}</h2>
+        `;     
+
         document.querySelector('#search-results').appendChild(div);
-    })
+    });
+
+    displayPagination();
 }
 
-// Display Slider Movies 
+/////////// Create and Display Page Pagination for Search
+function displayPagination(){
+    const div = document.createElement('div');
+    div.classList.add('pagination');
+    div.innerHTML = `
+    
+        <button class="btn btn-primary" id="prev">Prev</button>
+        <button class="btn btn-primary" id="next">Next</button>
+        <div class="page-counter">Page ${global.search.page} of ${global.search.totalPages}</div>    
+        `;
+
+    document.querySelector('#pagination').appendChild(div);
+
+    // Disable prev button if on first page
+    if(global.search.page === 1) {
+        document.querySelector('#prev').disabled = true;
+    }
+
+    // Disable next button if on last page
+    if(global.search.page === global.search.totalPages) {
+        document.querySelector('#next').disabled = true;
+    }
+
+    // Next page
+    document.querySelector('#next').addEventListener('click', async () => {
+        global.search.page++;
+        const { results, total_pages } = await searchAPIData();
+        displaySearchResults(results);
+    });
+
+    // Prev page
+    document.querySelector('#prev').addEventListener('click', async () => {
+        global.search.page--;
+        const { results, total_pages } = await searchAPIData();
+        displaySearchResults(results);
+    });
+}
+
+
+////////////////// Display Slider Movies 
 async function displaySlider () {
     const { results } = await fetchAPIData('movie/now_playing');
 
@@ -323,7 +380,7 @@ async function displaySlider () {
     })
 }
 
-// Display Top Rated TV Shows
+//////////////// Display Top Rated TV Shows
 async function displayTVSlider () {
     const { results } = await fetchAPIData('/tv/top_rated');
 
@@ -387,13 +444,13 @@ async function fetchAPIData(endpoint) {
 }
 
 //////////// Make request to search
-async function searchAPIData(endpoint) {
+async function searchAPIData() {
     const API_KEY = global.api.apiKey;
     const API_URL = global.api.apiUrl;
 
     showSpinner();
 
-    const res = await fetch(`${API_URL}search/${global.search.type}?api_key=${API_KEY}&language=en-US&query=${global.search.term}`);
+    const res = await fetch(`${API_URL}search/${global.search.type}?api_key=${API_KEY}&language=en-US&query=${global.search.term}&page=${global.search.page}`);
     const data = await res.json();
 
     hideSpinner();
