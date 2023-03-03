@@ -13,7 +13,7 @@ const global = {
     }
 };
 
-// Fetch popular movies
+////////////////////////// Fetch popular movies
 async function displayPopularMovies() {
     const {results} = await fetchAPIData('movie/popular');
     
@@ -49,7 +49,7 @@ async function displayPopularMovies() {
     })
 }
 
-// Fetch popular TV shows
+////////////////////// Fetch popular TV shows
 
 async function displayPopularTV (){
     const { results } = await fetchAPIData('tv/popular');
@@ -86,7 +86,7 @@ async function displayPopularTV (){
     })
 }
 
-// Display Movie Details 
+/////////////////////////// Display Movie Details 
 async function displayMovieDetails() {
     // enables us to get a single id number from the individual 
     const movieId = window.location.search.split('=')[1];
@@ -153,7 +153,7 @@ async function displayMovieDetails() {
     document.querySelector('#movie-details').appendChild(div);
 };
 
-// Display Show Display
+///////////////////////// Display Show Display
 async function displayShowDetails (){
     // enables us to get a single id number from the individual 
     const showId = window.location.search.split('=')[1];
@@ -238,7 +238,7 @@ function displayBackgroundImage(type, backgroundPath){
     }
 }
 
-// Search Movies / Shows 
+////////////////////// Search Movies / Shows 
 async function search() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -478,7 +478,7 @@ function highlightActiveLink() {
   });
 }
 
-// Show Alert
+//////////////// Show Alert
 function showAlert(message, className = 'error') {
     const alertEl = document.createElement('div');
     alertEl.classList.add('alert', className);
@@ -489,13 +489,13 @@ function showAlert(message, className = 'error') {
     setTimeout(() => alertEl.remove(), 3000)
 }
 
-// Add Commas to Numbers
+////////////////// Add Commas to Numbers
 function addCommasToNumber(num){
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
 
-// Init App 
+///////////////// Init App 
 function init() {
     switch(global.currentPage) {
     case '/':
