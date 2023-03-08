@@ -382,7 +382,7 @@ async function displaySlider () {
 
 //////////////// Display Top Rated TV Shows
 async function displayTVSlider () {
-    const { results } = await fetchAPIData('/tv/top_rated');
+    const { results } = await fetchAPIData('/tv/latest');
 
     results.forEach((show) => {
         const div = document.createElement('div');
@@ -504,7 +504,7 @@ function init() {
         displayPopularMovies();
         break;
     case '/shows.html':
-        // displayTVSlider();
+        displayTVSlider();
         displayPopularTV();
         break;
     case '/movie-details.html':
