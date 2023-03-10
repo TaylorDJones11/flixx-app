@@ -382,7 +382,7 @@ async function displaySlider () {
 
 //////////////// Display Top Rated TV Shows
 async function displayTVSlider () {
-    const { results } = await fetchAPIData('/tv/latest');
+    const { results } = await fetchAPIData('/tv/top_rated');
 
     results.forEach((show) => {
         const div = document.createElement('div');
@@ -397,11 +397,13 @@ async function displayTVSlider () {
       
         `
         // displays the innerHTML in the DOM
-        document.querySelector('.swiper-wrapper').appendChild(div);
+        document.querySelector('.swiper-wrapper-one').appendChild(div);
 
-        initSwiper();
+        initTVSwiper();
     })
 }
+
+
 
 function initSwiper(){
     const swiper = new Swiper('.swiper', {
@@ -426,6 +428,32 @@ function initSwiper(){
         }
     })
 };
+
+function initTVSwiper(){
+    const swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        freeMode: true, 
+        loop: true,
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false
+        },
+        breakpoints: {
+            500: {
+                slidesPerView: 2
+            }, 
+            700: {
+                slidesPerView: 3
+            },
+            1200: {
+                slidesPerView: 4
+            },
+        }
+    })
+};
+
+
 
 
 
@@ -504,7 +532,7 @@ function init() {
         displayPopularMovies();
         break;
     case '/shows.html':
-        displayTVSlider();
+        // displayTVSlider();
         displayPopularTV();
         break;
     case '/movie-details.html':
