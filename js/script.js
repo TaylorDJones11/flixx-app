@@ -388,7 +388,7 @@ async function displayTVSlider () {
         const div = document.createElement('div');
         div.classList.add('swiper-slide');
         div.innerHTML = `
-            <a href="shows.html?id=${show.id}">
+            <a href="tv-details.html?id=${show.id}">
             <img src="https://image.tmdb.org/t/p/w500${show.poster_path}" alt="${show.name}" />
             </a>
             <h4 class="swiper-rating">
