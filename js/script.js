@@ -153,7 +153,7 @@ async function displayMovieDetails() {
     document.querySelector('#movie-details').appendChild(div);
 };
 
-///////////////////////// Display Show Display
+///////////////////////// Display Show Details 
 async function displayShowDetails (){
     // enables us to get a single id number from the individual 
     const showId = window.location.search.split('=')[1];
