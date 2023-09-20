@@ -10,7 +10,7 @@
 </p>
 
 ## 📝 Description 
-Flixx was built using vanilla JavaScript, HTML, and CSS, along with an external API for managing media content. It allows users to browse movies and TV shows from a curated library. The app features a responsive UI with a search function. The external API provides access to a vast collection of media content, enabling users to browse through the latest movies and top rated show. This app showcases how to integrate an API with a vanilla JavaScript frontend to build a modern web application.
+Flixx was built using vanilla JavaScript, HTML, and CSS, along with an external API for managing media content. It allows users to browse movies and TV shows from a curated library. The app features a responsive UI with a search function. The external API provides access to a vast collection of media content, enabling users to browse through the latest movies and top-rated shows. This app showcases how to integrate an API with a vanilla JavaScript frontend to build a modern web application.
 
 ## 🚀 Features 
  - Browse and stream movies and TV shows from a curated library
